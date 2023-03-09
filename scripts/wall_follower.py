@@ -113,6 +113,8 @@ def scan_callback(msg):
         ang_vel = ang_vel
 
     # print(ang_vel)
+    
+    distance_to_travel = 60.10
 
     if vel_scale < 0.7:
         vel_scale = 0
@@ -121,7 +123,7 @@ def scan_callback(msg):
     else:
         vel_scale = vel_scale
         print('!!! GO GO GO !!!', glob_travel_distance)
-        if glob_travel_distance >= 60.10:
+        if glob_travel_distance >= distance_to_travel:
             print('!!! Arrived !!!')
             update_command_vel(0, 0)
             # TODO
