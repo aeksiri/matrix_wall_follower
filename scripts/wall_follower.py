@@ -17,14 +17,6 @@ def update_command_vel(linear_vel, angular_vel):
     msg.angular.z = angular_vel
     glob_cmd_vel_pub.publish(msg)
 
-def travel_distance(desire_travel_distance):
-    global glob_linear_x_vel
-    global glob_travel_distance
-
-    dt = 0.02
-    glob_travel_distance = glob_prev_travel_distance + glob_linear_x_vel*dt
-    glob_prev_travel_distance = glob_linear_x_vel
-
 def odom_callback(msg):
     global glob_linear_x_vel
     global glob_travel_distance
@@ -43,7 +35,6 @@ def odom_callback(msg):
 
 
 def scan_callback(msg):
-
     scan_max_value = msg.range_max
     # print(len(msg.ranges))
     # print(msg.ranges[750])
@@ -123,7 +114,7 @@ def scan_callback(msg):
 
     # print(ang_vel)
 
-    if vel_scale < 0.6:
+    if vel_scale < 0.7:
         vel_scale = 0
         print('!!! STOP !!!')
         update_command_vel(0, 0)
@@ -131,8 +122,10 @@ def scan_callback(msg):
         vel_scale = vel_scale
         print('!!! GO GO GO !!!', glob_travel_distance)
         if glob_travel_distance >= 60.10:
-            print('!!! STOP !!!')
+            print('!!! Arrived !!!')
             update_command_vel(0, 0)
+            # TODO
+            print('!!! Stop and Kill this node !!!')
         else:
             update_command_vel(vel_scale*lin_vel_max, vel_scale*ang_vel)
 
