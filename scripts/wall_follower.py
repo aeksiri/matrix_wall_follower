@@ -113,21 +113,22 @@ def scan_callback(msg):
 
     # print(ang_vel)
     
-    distance_to_travel = 60.10
+    distance_to_travel = 60.10 # [m]
+    obstacle_stop_distance = 0.7 # [m]
 
-    if vel_scale < 0.7:
+    if vel_scale < obstacle_stop_distance:
         vel_scale = 0
         print('!!! STOP !!!')
         update_command_vel(0, 0)
     else:
         vel_scale = vel_scale
-        print('!!! GO GO GO !!!', glob_travel_distance)
         if glob_travel_distance >= distance_to_travel:
             print('!!! Arrived !!!')
             update_command_vel(0, 0)
             # TODO
             print('!!! Stop and Kill this node !!!')
         else:
+            print('!!! GO GO GO !!!', glob_travel_distance)
             update_command_vel(vel_scale*lin_vel_max, vel_scale*ang_vel)
 
 
