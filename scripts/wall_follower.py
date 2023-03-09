@@ -33,7 +33,6 @@ def odom_callback(msg):
     glob_prev_travel_distance = glob_linear_x_vel
     #print(".")
 
-
 def scan_callback(msg):
     scan_max_value = msg.range_max
     # print(len(msg.ranges))
